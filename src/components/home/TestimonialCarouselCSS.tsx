@@ -27,6 +27,7 @@ export default function TestimonialCarouselCSS() {
         }
         .testimonial-track {
           display: flex;
+          flex-wrap: nowrap;
           animation: testimonialScroll 30s linear infinite;
           -webkit-animation: testimonialScroll 30s linear infinite;
           will-change: transform;

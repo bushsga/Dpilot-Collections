@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams, notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import Image from 'next/image';
 import type { Product, ProductVariant } from '@/types';
 import AddToCartButton from '@/components/product/AddToCartButton';
 import ProductImageGallery from '@/components/product/ProductImageGallery';
@@ -11,56 +10,59 @@ import ProductImageGallery from '@/components/product/ProductImageGallery';
 export default function ProductDetailPage() {
   const params = useParams();
   const id = params.id as string;
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   const [product, setProduct] = useState<Product | null>(null);
   const [variants, setVariants] = useState<ProductVariant[]>([]);
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const { data: prod, error: productError } = await supabase
+          .from('products')
+          .select('*')
+          .eq('id', id)
+          .single();
+
+        if (productError || !prod) {
+          console.error('Product fetch error:', productError);
+          notFound();
+          return;
+        }
+
+        const { data: vars, error: variantError } = await supabase
+          .from('product_variants')
+          .select('*')
+          .eq('product_id', id)
+          .order('created_at');
+
+        if (variantError) {
+          console.error('Variant fetch error:', variantError);
+        }
+
+        setProduct(prod as Product);
+        setVariants((vars || []) as ProductVariant[]);
+
+        if (vars && vars.length > 0) {
+          const firstAvailable = vars.find((v: ProductVariant) => v.quantity > 0);
+          setSelectedVariant((firstAvailable || vars[0]) as ProductVariant);
+        }
+      } catch (error) {
+        console.error('Failed to load product:', error);
+        setError('Unable to load this product. Please refresh the page.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchProduct();
-  }, [id]);
-
-  const fetchProduct = async () => {
-    try {
-      const { data: prod, error: productError } = await supabase
-        .from('products')
-        .select('*')
-        .eq('id', id)
-        .single();
-
-      if (productError || !prod) {
-        console.error('Product fetch error:', productError);
-        notFound();
-        return;
-      }
-
-      const { data: vars, error: variantError } = await supabase
-        .from('product_variants')
-        .select('*')
-        .eq('product_id', id)
-        .order('created_at');
-
-      if (variantError) {
-        console.error('Variant fetch error:', variantError);
-      }
-
-      setProduct(prod as Product);
-      setVariants((vars || []) as ProductVariant[]);
-
-      if (vars && vars.length > 0) {
-        const firstAvailable = vars.find((v: ProductVariant) => v.quantity > 0);
-        setSelectedVariant((firstAvailable || vars[0]) as ProductVariant);
-      }
-    } catch (error) {
-      console.error('Failed to load product:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [id, supabase]);
 
   if (loading) return <div className="text-center py-20 text-brand-muted">Loading...</div>;
+  if (error) return <div className="text-center py-20 text-red-600">{error}</div>;
   if (!product) return notFound();
 
   // Determine which images to show

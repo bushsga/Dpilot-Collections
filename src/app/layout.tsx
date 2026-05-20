@@ -9,6 +9,10 @@ import Script from 'next/script';
 export const metadata: Metadata = {
   title: 'DPiLOT COLLECTION | Premium Footwear',
   description: 'Original quality footwear, fully boxed and equipped.',
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+  },
   icons: {
     icon: '/icon.svg',
   },
@@ -24,7 +28,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="beforeInteractive"
         />
         <Script
-          src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CObject.entries%2CArray.prototype.find%2CIntersectionObserver%2CResizeObserver%2Csmoothscroll%2Cfetch"
+          src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver%2CResizeObserver%2Csmoothscroll"
           strategy="beforeInteractive"
         />
 

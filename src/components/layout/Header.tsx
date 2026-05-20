@@ -1,18 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { FiShoppingCart, FiMenu, FiX, FiShoppingBag, FiPackage, FiPhone } from 'react-icons/fi';
 import { useCart } from '@/hooks/useCart';
 
 const Header = () => {
   const { totalItems } = useCart();
-  const [mounted, setMounted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const handleNavClick = () => {
     setMobileMenuOpen(false);
@@ -51,7 +46,7 @@ const Header = () => {
           </Link>
           <Link href="/cart" className="relative text-brand-primary">
             <FiShoppingCart size={20} />
-            {mounted && totalItems > 0 && (
+            {totalItems > 0 && (
               <span className="absolute -top-2 -right-2 bg-brand-accent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
                 {totalItems}
               </span>
@@ -63,7 +58,7 @@ const Header = () => {
         <div className="flex md:hidden items-center gap-4">
           <Link href="/cart" className="relative text-brand-primary">
             <FiShoppingCart size={20} />
-            {mounted && totalItems > 0 && (
+            {totalItems > 0 && (
               <span className="absolute -top-2 -right-2 bg-brand-accent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-medium">
                 {totalItems}
               </span>
@@ -81,9 +76,9 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-black/50 z-50" onClick={() => setMobileMenuOpen(false)}>
+        <div className="md:hidden fixed inset-0 bg-black/50 z-50" onClick={() => setMobileMenuOpen(false)}>
           <div
-            className="bg-brand-surface w-64 ml-auto h-full shadow-lg z-[60] relative"
+            className="bg-brand-surface w-64 ml-auto h-full pt-16 shadow-lg z-[60] relative"
             onClick={(e) => e.stopPropagation()}
           >
             <nav className="flex flex-col py-4">

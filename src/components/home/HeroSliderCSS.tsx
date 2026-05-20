@@ -51,12 +51,12 @@ export default function HeroSliderCSS() {
 
         {/* Image Slider - Same logic as your working code */}
         <div className="order-1 md:order-2">
-          <div className="relative aspect-[4/3] min-h-[280px] md:min-h-[360px] overflow-hidden rounded-sm bg-brand-accent/10">
+          <div className="relative h-[280px] md:h-[360px] overflow-hidden rounded-sm bg-brand-accent/10">
             {slides.map((slide, index) => (
               <div
                 key={index}
                 className="absolute inset-0 transition-opacity duration-1000"
-                style={{ opacity: index === currentSlide ? 1 : 0 }}
+                style={{ opacity: index === currentSlide ? 1 : 0, pointerEvents: index === currentSlide ? 'auto' : 'none', willChange: 'opacity' }}
               >
                 <Image
                   src={slide.image}
