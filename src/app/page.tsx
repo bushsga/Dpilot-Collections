@@ -42,6 +42,7 @@ export default async function Home() {
       <HeroSliderCSS />
 
       {/* Categories Section */}
+      // update
       <section className="max-w-7xl mx-auto py-20 px-4">
         <h2 className="text-2xl font-bold text-brand-primary mb-8 text-center">
           Shop by Category
