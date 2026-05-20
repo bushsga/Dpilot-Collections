@@ -1,17 +1,35 @@
 "use client"
-import Link from 'next/link';
+
+import { useState, useEffect } from "react"
+import Image from "next/image"
+import Link from "next/link"
 
 const slides = [
-  { image: '/images/slide-1.jpg', alt: 'Slide 1' },
-  { image: '/images/slide-2.jpg', alt: 'Slide 2' },
-  { image: '/images/slide-3.jpg', alt: 'Slide 3' },
-  { image: '/images/slide-4.jpg', alt: 'Slide 4' },
-];
-
-// Double the slides so the loop is seamless (no reverse scroll)
-const allSlides = [...slides, ...slides];
+  {
+    image: "/images/slide-1.jpg",
+  },
+  {
+    image: "/images/slide-2.jpg",
+  },
+  {
+    image: "/images/slide-3.jpg",
+  },
+  {
+    image: "/images/slide-4.jpg",
+  },
+]
 
 export default function HeroSliderCSS() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length)
+    }, 5000)
+
+    return () => clearInterval(timer)
+  }, [])
+
   return (
     <section className="bg-brand-secondary overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-4 py-12 md:py-20">
@@ -31,47 +49,43 @@ export default function HeroSliderCSS() {
           </Link>
         </div>
 
-        {/* CSS-Only Slider */}
+        {/* Image Slider - Same logic as your working code */}
         <div className="order-1 md:order-2">
-<style jsx>{`
-  @keyframes slideAnimation {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-  }
-  .slider-track {
-    display: flex;
-    width: 800%;
-    animation: slideAnimation 24s linear infinite;
-  }
-  .slider-track:hover {
-    animation-play-state: paused;
-  }
-  .slide-item {
-    width: 12.5%;
-    flex-shrink: 0;
-  }
-`}</style>
-          <div className="overflow-hidden rounded-sm">
-            <div className="slider-track">
-              {allSlides.map((slide, index) => (
-                <div key={index} className="slide-item relative aspect-[4/3] bg-brand-accent/10">
-                  <img
-                    src={slide.image}
-                    alt={slide.alt}
-                    className="w-full h-full object-cover"
-                    loading={index < 4 ? 'eager' : 'lazy'}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.style.display = 'none';
-                      target.parentElement!.innerHTML = '<div class="w-full h-full flex items-center justify-center bg-brand-accent/5"><span class="text-brand-primary/30 font-bold text-4xl">DPiLOT</span></div>';
-                    }}
-                  />
-                </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-brand-accent/10">
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                className="absolute inset-0 transition-opacity duration-1000"
+                style={{ opacity: index === currentSlide ? 1 : 0 }}
+              >
+                <Image
+                  src={slide.image}
+                  alt={`Slide ${index + 1}`}
+                  fill
+                  className="object-cover"
+                  priority={index === 0}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            ))}
+
+            {/* Slide Indicators */}
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setCurrentSlide(index)}
+                  className="h-2 w-8 transition-all"
+                  style={{
+                    backgroundColor: index === currentSlide ? '#1B3A4B' : 'rgba(107,114,128,0.4)'
+                  }}
+                />
               ))}
             </div>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
