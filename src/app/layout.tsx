@@ -9,12 +9,25 @@ import Script from 'next/script';
 export const metadata: Metadata = {
   title: 'DPiLOT COLLECTION | Premium Footwear',
   description: 'Original quality footwear, fully boxed and equipped.',
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-brand-secondary">
+        {/* Polyfills for older browsers (iPhone 7, etc.) */}
+        <Script
+          src="https://cdn.jsdelivr.net/npm/@ungap/custom-elements@1.1.0/min.js"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="https://polyfill.io/v3/polyfill.min.js?features=Promise%2CObject.entries%2CArray.prototype.find%2CIntersectionObserver%2CResizeObserver%2Csmoothscroll%2Cfetch"
+          strategy="beforeInteractive"
+        />
+
         <AuthProvider>
           <CartProvider>
             <Header />
@@ -22,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <footer className="bg-brand-primary text-white text-center py-6 text-sm">
               © {new Date().getFullYear()} DPiLOT COLLECTION. All rights reserved.
             </footer>
-            
+
             {/* WhatsApp Floating Button */}
             <WhatsAppButton />
           </CartProvider>
@@ -33,7 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           src="https://upload-widget.cloudinary.com/global/all.js"
           strategy="lazyOnload"
         />
-        
+
         {/* Paystack Inline Script */}
         <Script
           src="https://js.paystack.co/v2/inline.js"

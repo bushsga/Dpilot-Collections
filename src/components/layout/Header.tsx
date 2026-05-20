@@ -70,7 +70,7 @@ const Header = () => {
             )}
           </Link>
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            type="button" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="text-brand-primary p-1"
             aria-label="Toggle menu"
           >
