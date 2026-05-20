@@ -1,8 +1,8 @@
 import { createServerSupabaseClient } from '@/lib/supabase/server';
 import Link from 'next/link';
 import type { Category } from '@/types';
-import HeroSlider from '@/components/home/HeroSlider';
-import TestimonialCarousel from '@/components/home/TestimonialCarousel';
+import HeroSliderCSS from '@/components/home/HeroSliderCSS';
+import TestimonialCarouselCSS from '@/components/home/TestimonialCarouselCSS';
 import ProductCardSlider from '@/components/product/ProductCardSlider';
 import type { Product } from '@/types';
 
@@ -39,7 +39,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section with Slider */}
-      <HeroSlider />
+      <HeroSliderCSS />
 
       {/* Categories Section */}
       <section className="max-w-7xl mx-auto py-20 px-4">
@@ -90,7 +90,7 @@ export default async function Home() {
       </section>
 
       {/* Testimonials Carousel */}
-      <TestimonialCarousel />
+      <TestimonialCarouselCSS />
 
       {/* Trust Banner */}
       <section className="bg-brand-surface border-y border-brand-muted/10 py-12">

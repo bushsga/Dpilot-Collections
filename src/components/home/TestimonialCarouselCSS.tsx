@@ -1,34 +1,43 @@
-'use client';
-
-import useEmblaCarousel from 'embla-carousel-react';
-import Autoplay from 'embla-carousel-autoplay';
+'use client'
 
 const testimonials = [
   { name: 'Amina', text: 'Best quality shoes! Fast delivery too.', rating: 5 },
   { name: 'Chidi', text: 'My Timbs came fully boxed and perfect.', rating: 5 },
-  { name: 'Fola', text: 'Original LV sneakers – I’m impressed.', rating: 5 },
+  { name: 'Fola', text: 'Original LV sneakers – I\'m impressed.', rating: 5 },
   { name: 'Tunde', text: 'Great customer service. Will buy again!', rating: 5 },
   { name: 'Ngozi', text: 'The slides are so comfortable. Thank you!', rating: 5 },
   { name: 'Emeka', text: 'Luxury shoes at a fair price. Highly recommended.', rating: 5 },
 ];
 
-export default function TestimonialCarousel() {
-  const [emblaRef] = useEmblaCarousel(
-    { loop: true, align: 'start', slidesToScroll: 1 },
-    [Autoplay({ delay: 3500 })]
-  );
-
+export default function TestimonialCarouselCSS() {
   return (
-    <section className="py-20 bg-brand-surface">
+    <section className="py-20 bg-brand-surface overflow-hidden">
       <h2 className="text-2xl font-bold text-brand-primary text-center mb-12">
         What Our Customers Say
       </h2>
-      <div className="overflow-hidden max-w-5xl mx-auto px-4" ref={emblaRef}>
-        <div className="flex gap-6">
-          {testimonials.map((t, idx) => (
+      
+      <style jsx>{`
+        @keyframes testimonialScroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .testimonial-track {
+          display: flex;
+          width: max-content;
+          animation: testimonialScroll 30s linear infinite;
+        }
+        .testimonial-track:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+      
+      <div className="relative">
+        <div className="testimonial-track">
+          {/* Double the testimonials for seamless loop */}
+          {[...testimonials, ...testimonials].map((t, idx) => (
             <div
               key={idx}
-              className="flex-[0_0_85%] sm:flex-[0_0_45%] lg:flex-[0_0_30%] bg-brand-secondary border border-brand-muted/10 p-6"
+              className="w-[280px] sm:w-[320px] flex-shrink-0 mx-3 bg-brand-secondary border border-brand-muted/10 p-6"
             >
               <div className="flex gap-1 mb-3">
                 {Array.from({ length: t.rating }).map((_, i) => (
