@@ -23,32 +23,41 @@ export default function ProductDetailPage() {
   }, [id]);
 
   const fetchProduct = async () => {
-    const { data: prod } = await supabase
-      .from('products')
-      .select('*')
-      .eq('id', id)
-      .single();
+    try {
+      const { data: prod, error: productError } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', id)
+        .single();
 
-    if (!prod) {
-      notFound();
+      if (productError || !prod) {
+        console.error('Product fetch error:', productError);
+        notFound();
+        return;
+      }
+
+      const { data: vars, error: variantError } = await supabase
+        .from('product_variants')
+        .select('*')
+        .eq('product_id', id)
+        .order('created_at');
+
+      if (variantError) {
+        console.error('Variant fetch error:', variantError);
+      }
+
+      setProduct(prod as Product);
+      setVariants((vars || []) as ProductVariant[]);
+
+      if (vars && vars.length > 0) {
+        const firstAvailable = vars.find((v: ProductVariant) => v.quantity > 0);
+        setSelectedVariant((firstAvailable || vars[0]) as ProductVariant);
+      }
+    } catch (error) {
+      console.error('Failed to load product:', error);
+    } finally {
+      setLoading(false);
     }
-
-    const { data: vars } = await supabase
-      .from('product_variants')
-      .select('*')
-      .eq('product_id', id)
-      .order('created_at');
-
-    setProduct(prod as Product);
-    setVariants((vars || []) as ProductVariant[]);
-    
-    // Auto-select first available variant
-    if (vars && vars.length > 0) {
-      const firstAvailable = vars.find((v: ProductVariant) => v.quantity > 0);
-      setSelectedVariant((firstAvailable || vars[0]) as ProductVariant);
-    }
-    
-    setLoading(false);
   };
 
   if (loading) return <div className="text-center py-20 text-brand-muted">Loading...</div>;

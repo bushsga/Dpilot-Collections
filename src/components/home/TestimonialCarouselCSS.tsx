@@ -18,16 +18,22 @@ export default function TestimonialCarouselCSS() {
       
       <style jsx>{`
         @keyframes testimonialScroll {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+        @-webkit-keyframes testimonialScroll {
+          0% { -webkit-transform: translate3d(0, 0, 0); transform: translate3d(0, 0, 0); }
+          100% { -webkit-transform: translate3d(-50%, 0, 0); transform: translate3d(-50%, 0, 0); }
         }
         .testimonial-track {
           display: flex;
-          width: max-content;
           animation: testimonialScroll 30s linear infinite;
+          -webkit-animation: testimonialScroll 30s linear infinite;
+          will-change: transform;
         }
         .testimonial-track:hover {
           animation-play-state: paused;
+          -webkit-animation-play-state: paused;
         }
       `}</style>
       

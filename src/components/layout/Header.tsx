@@ -81,9 +81,9 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-black/50 z-40" onClick={() => setMobileMenuOpen(false)}>
+        <div className="md:hidden fixed inset-0 top-16 bg-black/50 z-50" onClick={() => setMobileMenuOpen(false)}>
           <div
-            className="bg-brand-surface w-64 ml-auto h-full shadow-lg"
+            className="bg-brand-surface w-64 ml-auto h-full shadow-lg z-[60] relative"
             onClick={(e) => e.stopPropagation()}
           >
             <nav className="flex flex-col py-4">
