@@ -28,13 +28,22 @@ export default function TestimonialCarouselCSS() {
         .testimonial-track {
           display: flex;
           flex-wrap: nowrap;
-          animation: testimonialScroll 30s linear infinite;
-          -webkit-animation: testimonialScroll 30s linear infinite;
+          width: max-content;
+          animation: testimonialScroll 15s linear infinite;
+          -webkit-animation: testimonialScroll 15s linear infinite;
           will-change: transform;
         }
         .testimonial-track:hover {
           animation-play-state: paused;
           -webkit-animation-play-state: paused;
+        }
+
+        /* Faster on mobile */
+        @media (max-width: 640px) {
+          .testimonial-track {
+            animation-duration: 10s;
+            -webkit-animation-duration: 10s;
+          }
         }
       `}</style>
       
