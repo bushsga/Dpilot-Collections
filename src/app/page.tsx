@@ -90,7 +90,7 @@ export default async function Home() {
       </section>
 
       {/* Testimonials Carousel */}
-      <TestimonialCarouselCSS />
+      {/*<TestimonialCarouselCSS />*/}
 
       {/* Trust Banner */}
       <section className="bg-brand-surface border-y border-brand-muted/10 py-12">
