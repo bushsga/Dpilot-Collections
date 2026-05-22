@@ -102,15 +102,14 @@ const Header = () => {
               )}
             </Link>
 
-            <button
-              type="button"
-              onClick={toggleMenu}
-              aria-label="Toggle menu"
-              aria-expanded={mobileMenuOpen}
-              className="text-brand-primary p-1 relative z-[1001]"
-            >
-              {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-            </button>
+<button
+  type="button"
+  onTouchStart={() => setMobileMenuOpen((prev) => !prev)}
+  className="text-brand-primary p-1"
+  aria-label="Toggle menu"
+>
+  {mobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+</button>
           </div>
         </div>
       </header>
