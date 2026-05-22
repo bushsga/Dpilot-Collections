@@ -1,56 +1,31 @@
-'use client';
-
+"use client";
 import { useState } from 'react';
+import Link from 'next/link';
 
-export default function Header() {
-  const [open, setOpen] = useState(false);
+export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        height: '70px',
-        background: 'white',
-        zIndex: 999999,
-        display: 'flex',
-        alignItems: 'center',
-        padding: '20px',
-      }}
-    >
-      <button
-        onClick={() => {
-          alert('BUTTON WORKS');
-          setOpen(!open);
-        }}
-        style={{
-          padding: '20px',
-          background: 'red',
-          color: 'white',
-          fontSize: '18px',
-        }}
-      >
-        MENU
-      </button>
-
-      {open && (
-        <div
-          style={{
-            position: 'fixed',
-            top: '70px',
-            right: 0,
-            width: '250px',
-            height: '300px',
-            background: 'black',
-            color: 'white',
-            zIndex: 999999,
-          }}
-        >
-          MENU OPEN
+    <nav className="bg-white shadow-md w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between h-16 items-center">
+          <Link href="/" className="font-bold">Logo</Link>
+          {/* Desktop links */}
+          <div className="hidden md:flex space-x-4">
+            <Link href="/">Home</Link>
+          </div>
+          {/* Mobile button */}
+          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+            Menu
+          </button>
+        </div>
+      </div>
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden">
+          <Link href="/">Home</Link>
         </div>
       )}
-    </div>
+    </nav>
   );
 }
