@@ -39,7 +39,7 @@ export default async function Home() {
   return (
     <>
       {/* Hero Section with Slider */}
-      {/*<HeroSliderCSS />*/}
+      <HeroSliderCSS />
 
       {/* Categories Section */}
       <section className="max-w-7xl mx-auto py-20 px-4">
@@ -90,7 +90,7 @@ export default async function Home() {
       </section>
 
       {/* Testimonials Carousel */}
-      {/*<TestimonialCarouselCSS />*/}
+      <TestimonialCarouselCSS />
 
       {/* Trust Banner */}
       <section className="bg-brand-surface border-y border-brand-muted/10 py-12">

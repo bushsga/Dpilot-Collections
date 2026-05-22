@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </footer>
 
             {/* WhatsApp Floating Button */}
-            {/*<WhatsAppButton />*/}
+            <WhatsAppButton />
           </CartProvider>
         </AuthProvider>
 
