@@ -24,8 +24,8 @@
     background-color: var(--color-brand-secondary);
     color: var(--color-brand-primary);
     font-family: var(--font-family-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+     /*-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;*/
   }
 
   /* Clean focus styles */
