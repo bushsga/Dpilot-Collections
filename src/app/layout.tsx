@@ -22,7 +22,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-brand-secondary">
-        {/* Polyfills for older browsers (iPhone 7, etc.) */}
         <Script
           src="https://cdn.jsdelivr.net/npm/@ungap/custom-elements@1.1.0/min.js"
           strategy="beforeInteractive"
