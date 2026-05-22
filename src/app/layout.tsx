@@ -22,14 +22,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col bg-brand-secondary">
-        <Script
+        {/*<Script
           src="https://cdn.jsdelivr.net/npm/@ungap/custom-elements@1.1.0/min.js"
           strategy="beforeInteractive"
         />
         <Script
           src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver%2CResizeObserver%2Csmoothscroll"
           strategy="beforeInteractive"
-        />
+        />*/}
 
         <AuthProvider>
           <CartProvider>
